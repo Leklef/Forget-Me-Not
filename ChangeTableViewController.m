@@ -44,7 +44,7 @@
 
 - (void)textFieldDidChange:(UITextField*)textField{
     if (_nameTextField.text.length > 0){
-        _saveButton.tintColor = [UIColor blueColor];
+        _saveButton.tintColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
     }
     else{
         _saveButton.tintColor = [UIColor grayColor];
@@ -53,24 +53,16 @@
 
 - (IBAction)saveButton:(id)sender {
     if (_nameTextField.text.length != 0){
+        [self.navigationController popToRootViewControllerAnimated:YES];
         
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UITableViewController *vc = [sb instantiateViewControllerWithIdentifier:@"TableVC"];
-        
-        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-        
-        [delegate.window setRootViewController:vc];
+//        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+//        
+//        [delegate.window setRootViewController:vc];
         
     }
     else{
         
     }
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    ViewControllerWithTable *vc = [segue destinationViewController];
-    [vc.nameArray addObject:_nameTextField.text];
-    [vc.imageArray addObject:_imageName];
 }
 
 @end
