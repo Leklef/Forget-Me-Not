@@ -7,7 +7,7 @@
 //
 
 #import "AddCollectionViewController.h"
-#import "ChangeViewController.h"
+#import "ChangeTableViewController.h"
 
 
 @interface AddCollectionViewController () {
@@ -22,7 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    newForgets = @[@"свет",@"вода",@"settings"];
+    newForgets = @[@"Свет",@"Вода",@"Газ",@"Кондиционер",@"Телевизор",@"Компьютер",@"Кошелек",@"Ключи",@"Телефон",@"Документы",@"Окно",@"Дверь",@"Утюг",@"Корм",@"Вещи",@"Другое"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,6 +33,10 @@
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return newForgets.count;
 }
+
+//-(NSInteger)collectionView:(UICollectionView *)collectionView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return newForgets.count;
+//}
 
 /*
 #pragma mark - Navigation
@@ -51,17 +55,16 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     UIImageView *addImage = (UIImageView *)[cell viewWithTag:100];
     UILabel *addLabel = (UILabel *)[cell viewWithTag:101];
-    addImage.image = [UIImage imageNamed:[newForgets objectAtIndex:indexPath.row]];
-    addLabel.text = [newForgets objectAtIndex:indexPath.row];
+    addImage.image = [UIImage imageNamed:[newForgets objectAtIndex:indexPath.item]];
+    addLabel.text = [newForgets objectAtIndex:indexPath.item];
     return cell;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    NSLog(@"Зашел");
-    NSIndexPath *indexPath = [self.collectionView indexPathForSelectedRow];
-    ChangeViewController *vc = [segue destinationViewController];
-    vc.imageName = [newForgets objectAtIndex:indexPath.row];
-    vc.thingName = [newForgets objectAtIndex:indexPath.row];
+    NSIndexPath *indexPath = [[self.collectionView indexPathsForSelectedItems] lastObject];
+    ChangeTableViewController *vc = [segue destinationViewController];
+    vc.imageName = newForgets[indexPath.row];
+    vc.thingName = newForgets[indexPath.row];
 }
 
 @end

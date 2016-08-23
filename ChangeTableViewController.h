@@ -1,18 +1,19 @@
 //
-//  ChangeViewController.h
+//  ChangeTableViewController.h
 //  Forget-Me-Not
 //
-//  Created by Ленар on 20.08.16.
+//  Created by Ленар on 22.08.16.
 //  Copyright © 2016 LeNComp. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface ChangeViewController : UIViewController
+@interface ChangeTableViewController : UITableViewController
+
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-@property (weak, nonatomic) IBOutlet UISwitch *everydaySwitch;
-@property (weak, nonatomic) IBOutlet UITextField *noteTextField;
 @property (strong, nonatomic) NSString *imageName;
 @property (strong, nonatomic) NSString *thingName;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
+@property (weak, nonatomic) IBOutlet UITextView *noteTextView;
 
 @end
