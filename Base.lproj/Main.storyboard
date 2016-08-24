@@ -30,10 +30,10 @@
                                                         <action selector="notificationSwitch:" destination="jxi-OB-7fh" eventType="valueChanged" id="A5f-px-MUB"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Уведомления" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zfP-EB-yhl">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Уведомления" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zfP-EB-yhl">
                                                     <rect key="frame" x="24" y="0.0" width="231" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -257,7 +257,7 @@
                             <tableViewSection id="P7A-8c-Ttf">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="OO6-Iz-NBU">
-                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="35" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OO6-Iz-NBU" id="MRZ-mH-TB3">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -277,7 +277,7 @@
                             <tableViewSection id="3Lc-Rw-hXJ">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="248" id="vpk-ff-aAV">
-                                        <rect key="frame" x="0.0" y="179" width="320" height="248"/>
+                                        <rect key="frame" x="0.0" y="115" width="320" height="248"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vpk-ff-aAV" id="T7u-vf-6mr">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="247.5"/>
@@ -298,7 +298,7 @@
                             <tableViewSection id="1nk-gK-DWc">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="45" id="LIc-0i-1aP">
-                                        <rect key="frame" x="0.0" y="463" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="399" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LIc-0i-1aP" id="9Hd-1E-C5p">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44.5"/>

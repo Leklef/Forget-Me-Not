@@ -20,17 +20,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UINib *customCellNib = [UINib nibWithNibName:@"TableViewCell" bundle:nil];
-    [self.tableView registerNib:customCellNib forCellReuseIdentifier:@"cell"];
     // Do any additional setup after loading the view.
     _def = [NSUserDefaults standardUserDefaults];
     _imageArray = [_def objectForKey:@"image"];
     _nameArray = [_def objectForKey:@"name"];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    _def = [NSUserDefaults standardUserDefaults];
+    _imageArray = [NSMutableArray arrayWithArray:[_def objectForKey:@"image"]];
+    _nameArray = [NSMutableArray arrayWithArray:[_def objectForKey:@"name"]];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -89,21 +96,23 @@
     cell.shouldAnimateIcons = YES;
     
     [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-        NSLog(@"Did swipe \"Checkmark\" cell");
+        NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];
+        [attributeString addAttribute:NSStrikethroughStyleAttributeName
+                                value:@2
+                                range:NSMakeRange(0, [attributeString length])];
+        cell.textLabel.attributedText = attributeString;
+        _def = [NSUserDefaults standardUserDefaults];
+        [_def setObject:_nameArray forKey:@"name"];
     }];
     
     [cell setSwipeGestureWithView:crossView color:redColor mode:MCSwipeTableViewCellModeExit state:MCSwipeTableViewCellState2 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-        NSLog(@"Did swipe \"Cross\" cell");
-        
-        [self deleteCell:cell];
+        [_nameArray removeObjectAtIndex:indexPath.row];
+        [_imageArray removeObjectAtIndex:indexPath.row];
+        _def = [NSUserDefaults standardUserDefaults];
+        [_def setObject:_imageArray forKey:@"image"];
+        [_def setObject:_nameArray forKey:@"name"];
+        [_tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
     }];
-}
-
-- (void)deleteCell:(MCSwipeTableViewCell *)cell {
-    NSParameterAssert(cell);
-    
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (UIView *)viewWithImageName:(NSString *)imageName {
@@ -113,26 +122,10 @@
     return imageView;
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
-    // No
-    if (buttonIndex == 0) {
-        [_cellToDelete swipeToOriginWithCompletion:^{
-            NSLog(@"Swiped back");
-        }];
-        _cellToDelete = nil;
-    }
-    
-    // Yes
-    else {
-        [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:_cellToDelete]] withRowAnimation:UITableViewRowAnimationFade];
-    }
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ViewControllerWithTable *tableViewController = [[ViewControllerWithTable alloc] init];
-    [self.navigationController pushViewController:tableViewController animated:YES];
-}
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    ViewControllerWithTable *tableViewController = [[ViewControllerWithTable alloc] init];
+//    [self.navigationController pushViewController:tableViewController animated:YES];
+//}
 
 
 @end
