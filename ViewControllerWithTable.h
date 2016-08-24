@@ -12,5 +12,6 @@
 
 @property (strong, nonatomic) NSMutableArray *imageArray;
 @property (strong, nonatomic) NSMutableArray *nameArray;
+@property (strong, nonatomic) NSUserDefaults *def;
 
 @end

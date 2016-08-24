@@ -9,11 +9,8 @@
 #import "ViewControllerWithTable.h"
 #import "MCSwipeTableViewCell.h"
 
-static NSUInteger const kMCNumItems = 7;
-
 @interface ViewControllerWithTable () <UITableViewDelegate, UITableViewDataSource, MCSwipeTableViewCellDelegate, UIAlertViewDelegate>
 
-@property (nonatomic, assign) NSUInteger nbItems;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) MCSwipeTableViewCell *cellToDelete;
 
@@ -23,10 +20,12 @@ static NSUInteger const kMCNumItems = 7;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _nbItems = kMCNumItems;
     UINib *customCellNib = [UINib nibWithNibName:@"TableViewCell" bundle:nil];
     [self.tableView registerNib:customCellNib forCellReuseIdentifier:@"cell"];
     // Do any additional setup after loading the view.
+    _def = [NSUserDefaults standardUserDefaults];
+    _imageArray = [_def objectForKey:@"image"];
+    _nameArray = [_def objectForKey:@"name"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,7 +44,7 @@ static NSUInteger const kMCNumItems = 7;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section { //количество ячеек
-    return 7;
+    return _nameArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -85,8 +84,8 @@ static NSUInteger const kMCNumItems = 7;
     
     [cell setDelegate:self];
     
-    [cell.textLabel setText:@"Свет"];
-    [cell.imageView setImage:[UIImage imageNamed:@"Свет"]];
+    [cell.textLabel setText:_nameArray[indexPath.row]];
+    [cell.imageView setImage:[UIImage imageNamed:_imageArray[indexPath.row]]];
     cell.shouldAnimateIcons = YES;
     
     [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
@@ -95,12 +94,7 @@ static NSUInteger const kMCNumItems = 7;
     
     [cell setSwipeGestureWithView:crossView color:redColor mode:MCSwipeTableViewCellModeExit state:MCSwipeTableViewCellState2 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
         NSLog(@"Did swipe \"Cross\" cell");
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Delete?"
-                                                            message:@"Are you sure your want to delete the cell?"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"No"
-                                                  otherButtonTitles:@"Yes", nil];
-        [alertView show];
+        
         [self deleteCell:cell];
     }];
 }
@@ -108,7 +102,6 @@ static NSUInteger const kMCNumItems = 7;
 - (void)deleteCell:(MCSwipeTableViewCell *)cell {
     NSParameterAssert(cell);
     
-    _nbItems--;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
@@ -132,7 +125,6 @@ static NSUInteger const kMCNumItems = 7;
     
     // Yes
     else {
-        _nbItems--;
         [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:_cellToDelete]] withRowAnimation:UITableViewRowAnimationFade];
     }
 }

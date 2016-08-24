@@ -26,9 +26,11 @@
     
     if ([defaults boolForKey:@"notificationSwitch"]==true){
         [_notificationSwitch setOn:YES];
+        _saveButton.tintColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
     }
     else {
         [_notificationSwitch setOn:NO];
+        _saveButton.tintColor = [UIColor grayColor];
     }
     
     // Uncomment the following line to preserve selection between presentations.
@@ -51,6 +53,9 @@
         BOOL iSwitch = _notificationSwitch.isOn;
         [switchOn setBool:iSwitch forKey:@"notificationSwitch"];
         [switchOn synchronize];
+        [defaults setBool:NO forKey:@"notificationIsActive"];
+        [defaults synchronize];
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
     }
 }
 

@@ -15,5 +15,8 @@
 @property (strong, nonatomic) NSString *thingName;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet UITextView *noteTextView;
+@property (strong, nonatomic) NSMutableArray *imageArr;
+@property (strong, nonatomic) NSMutableArray *nameArr;
+@property (strong, nonatomic) NSUserDefaults *def;
 
 @end
