@@ -68,11 +68,6 @@
     
     return cell;
     
-    
-//    TableViewCell *cell = (TableViewCell*) [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-//    cell.nameLabel.text = @"Свет";
-//    [cell.imageForTable setImage:[UIImage imageNamed:@"Свет"]];
-//    return cell;
 }
 
 - (void)configureCell:(MCSwipeTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -99,11 +94,7 @@
     }
     if ([_checkArray[indexPath.row] isEqualToString:@"NO"]){
         NSString *str = cell.textLabel.text;
-        //NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];
-        //[attributeString addAttribute:NSStrikethroughStyleAttributeName
-          //                      value:@2
-            //                    range:NSMakeRange(0, [attributeString length])];
-        //cell.textLabel.attributedText = attributeString;
+        cell.textLabel.attributedText = nil;
         cell.textLabel.text = str;
         cell.textLabel.textColor = [UIColor blackColor];
     }
@@ -157,5 +148,16 @@
     return imageView;
 }
 
+- (IBAction)reload:(id)sender {
+    _def = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *arr =[NSMutableArray arrayWithArray:[_def objectForKey:@"check"]];
+    for (int i = 0; i < arr.count; i++){
+        [arr replaceObjectAtIndex:i withObject:@"NO"];
+    }
+    _checkArray = [NSMutableArray arrayWithArray:arr];
+    [_def setObject:arr forKey:@"check"];
+    [_def synchronize];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+}
 
 @end

@@ -65,38 +65,7 @@
         [_def setObject:arrImage forKey:@"image"];
         [_def setObject:arrName forKey:@"name"];
         [_def setObject:arrCheck forKey:@"check"];
-        [self.navigationController popToRootViewControllerAnimated:YES];
-//        if([_def objectForKey:@"image"]==nil){
-//            _imageArr = [[NSMutableArray alloc]init];
-//            _nameArr = [[NSMutableArray alloc]init];
-//            [_imageArr addObject:_imageName];
-//            [_nameArr addObject:_thingName];
-//            [_def setObject:_nameArr forKey:@"name"];
-//            [_def setObject:_imageArr forKey:@"image"];
-//            [_def synchronize];
-//            _nameArr = [_def objectForKey:@"name"];
-//            NSLog(@"%@", _nameArr[0]);
-//            NSLog(@"%@", _imageArr[0]);
-//            [self.navigationController popToRootViewControllerAnimated:YES];
-//            
-//        }
-//        else {
-//            NSMutableArray *iamge = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"image"]];
-//            //_imageArr = [NSMutableArray arrayWithArray:[_def objectForKey:@"image"]];
-//            //_nameArr = [NSMutableArray arrayWithArray:[_def objectForKey:@"name"]];
-//            //[_imageArr addObject:_imageName];
-//            //[_nameArr addObject:_thingName];
-//            //[_def setObject:_nameArr forKey:@"name"];
-//            //[_def setObject:_imageArr forKey:@"image"];
-//            //[_def synchronize];
-//            NSLog(@"%@", iamge[0]);
-//            //[self.navigationController popToRootViewControllerAnimated:YES];
-//        }
-        
-//        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-//        
-//        [delegate.window setRootViewController:vc];
-        
+        [self.navigationController popToRootViewControllerAnimated:YES];        
     }
     else{
         
