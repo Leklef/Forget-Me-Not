@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _aboutAppImage.image = [UIImage imageNamed:@"Оприл"];
+    _aboutAppImage.image = [UIImage imageNamed:@"Опри"];
 }
 
 - (void)didReceiveMemoryWarning {

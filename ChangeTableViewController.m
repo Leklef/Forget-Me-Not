@@ -58,10 +58,13 @@
         _def = [NSUserDefaults standardUserDefaults];
         NSMutableArray *arrName = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"name"]];
         NSMutableArray *arrImage = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"image"]];
+        NSMutableArray *arrCheck = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults]objectForKey:@"check"]];
         [arrName addObject:_thingName];
         [arrImage addObject:_imageName];
+        [arrCheck addObject:@"NO"];
         [_def setObject:arrImage forKey:@"image"];
         [_def setObject:arrName forKey:@"name"];
+        [_def setObject:arrCheck forKey:@"check"];
         [self.navigationController popToRootViewControllerAnimated:YES];
 //        if([_def objectForKey:@"image"]==nil){
 //            _imageArr = [[NSMutableArray alloc]init];

@@ -20,23 +20,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    _def = [NSUserDefaults standardUserDefaults];
-    _imageArray = [_def objectForKey:@"image"];
-    _nameArray = [_def objectForKey:@"name"];
     _tableView.delegate = self;
     _tableView.dataSource = self;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     _def = [NSUserDefaults standardUserDefaults];
     _imageArray = [NSMutableArray arrayWithArray:[_def objectForKey:@"image"]];
     _nameArray = [NSMutableArray arrayWithArray:[_def objectForKey:@"name"]];
+    _checkArray = [NSMutableArray arrayWithArray:[_def objectForKey:@"check"]];
     [self.tableView reloadData];
 }
 
@@ -93,25 +89,64 @@
     
     [cell.textLabel setText:_nameArray[indexPath.row]];
     [cell.imageView setImage:[UIImage imageNamed:_imageArray[indexPath.row]]];
-    cell.shouldAnimateIcons = YES;
-    
-    [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+    if([_checkArray[indexPath.row] isEqualToString:@"YES"]){
         NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];
         [attributeString addAttribute:NSStrikethroughStyleAttributeName
                                 value:@2
                                 range:NSMakeRange(0, [attributeString length])];
         cell.textLabel.attributedText = attributeString;
-        _def = [NSUserDefaults standardUserDefaults];
-        [_def setObject:_nameArray forKey:@"name"];
-    }];
+        cell.textLabel.textColor = [UIColor grayColor];
+    }
+    if ([_checkArray[indexPath.row] isEqualToString:@"NO"]){
+        NSString *str = cell.textLabel.text;
+        //NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];
+        //[attributeString addAttribute:NSStrikethroughStyleAttributeName
+          //                      value:@2
+            //                    range:NSMakeRange(0, [attributeString length])];
+        //cell.textLabel.attributedText = attributeString;
+        cell.textLabel.text = str;
+        cell.textLabel.textColor = [UIColor blackColor];
+    }
+    cell.shouldAnimateIcons = YES;
     
+    [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+        if([_checkArray[indexPath.row] isEqualToString:@"NO"]){
+            [_checkArray replaceObjectAtIndex:indexPath.row withObject:@"YES"];
+            NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:cell.textLabel.text];
+            [attributeString addAttribute:NSStrikethroughStyleAttributeName
+                                    value:@2
+                                    range:NSMakeRange(0, [attributeString length])];
+            cell.textLabel.attributedText = attributeString;
+            cell.textLabel.textColor = [UIColor grayColor];
+            _def = [NSUserDefaults standardUserDefaults];
+            [_def setObject:_checkArray forKey:@"check"];
+            [_def synchronize];
+        }
+        else {
+            if ([_checkArray[indexPath.row] isEqualToString:@"YES"]){
+                [_checkArray replaceObjectAtIndex:indexPath.row withObject:@"NO"];
+                cell.textLabel.textColor = [UIColor blackColor];
+                _def = [NSUserDefaults standardUserDefaults];
+                NSString *str = [NSString stringWithString:cell.textLabel.text];
+                NSLog(@"%@",str);
+                cell.textLabel.attributedText = nil;
+                cell.textLabel.text = str;
+                [_def setObject:_checkArray forKey:@"check"];
+                [_def synchronize];
+            }
+        }
+    }];
+
     [cell setSwipeGestureWithView:crossView color:redColor mode:MCSwipeTableViewCellModeExit state:MCSwipeTableViewCellState2 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
         [_nameArray removeObjectAtIndex:indexPath.row];
         [_imageArray removeObjectAtIndex:indexPath.row];
+        [_checkArray removeObjectAtIndex:indexPath.row];
         _def = [NSUserDefaults standardUserDefaults];
+        [_tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
         [_def setObject:_imageArray forKey:@"image"];
         [_def setObject:_nameArray forKey:@"name"];
-        [_tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
+        [_def setObject:_checkArray forKey:@"check"];
+        [_def synchronize];
     }];
 }
 
@@ -121,11 +156,6 @@
     imageView.contentMode = UIViewContentModeCenter;
     return imageView;
 }
-
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    ViewControllerWithTable *tableViewController = [[ViewControllerWithTable alloc] init];
-//    [self.navigationController pushViewController:tableViewController animated:YES];
-//}
 
 
 @end
