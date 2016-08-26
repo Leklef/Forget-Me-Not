@@ -133,11 +133,12 @@
         [_imageArray removeObjectAtIndex:indexPath.row];
         [_checkArray removeObjectAtIndex:indexPath.row];
         _def = [NSUserDefaults standardUserDefaults];
-        [_tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
+        [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [_def setObject:_imageArray forKey:@"image"];
         [_def setObject:_nameArray forKey:@"name"];
         [_def setObject:_checkArray forKey:@"check"];
         [_def synchronize];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     }];
 }
 

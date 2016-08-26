@@ -70,6 +70,7 @@
         localNotification.fireDate = pickerDate;
         localNotification.alertBody = @"Подготовься к уходу";
         localNotification.timeZone = [NSTimeZone defaultTimeZone];
+        localNotification.repeatInterval = NSCalendarUnitDay;
         localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadData" object:self];
